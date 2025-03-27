@@ -217,7 +217,7 @@ program
       // Start the scanner
       await createScanner({
         networkUrl,
-        eventSignatures: [eventSignature],
+        eventSignature,
         paramIndex,
         contractAddress,
         title,
