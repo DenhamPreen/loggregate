@@ -4,3 +4,4 @@
 - [] make param index name
 - [] rename logtui to log-aggregate
 - [] allow human readable event signatures
+- [] support decimal places on display
