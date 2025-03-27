@@ -47,7 +47,8 @@ program
 
 // Main command
 program
-  .option("-e, --events <events...>", "Event signatures to monitor")
+  .option("-e, --event <event>", "Event signature to monitor")
+  .option("-p, --param <index>", "Index of the event parameter to track (0-based)")
   .option("-n, --network <network>", "Network to connect to (default: eth)")
   .option(
     "-t, --title <title>",
@@ -120,13 +121,13 @@ program
         console.log(chalk.blue("\nUsage Examples:"));
         console.log(
           `${chalk.yellow(
-            'logtui -e "Transfer(address,address,uint256)" -n arbitrum'
-          )} - Monitor transfers on Arbitrum`
+            'logtui -e "Transfer(address,address,uint256)" -p 2 -n arbitrum'
+          )} - Monitor transfer amounts on Arbitrum (third parameter)`
         );
         console.log(
           `${chalk.yellow(
-            'logtui -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -n optimism'
-          )} - Monitor swaps on Optimism`
+            'logtui -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n optimism'
+          )} - Monitor swap amounts on Optimism (second parameter)`
         );
         console.log();
         process.exit(0);
@@ -148,21 +149,35 @@ program
         process.exit(1);
       }
 
-      // Get event signatures
-      const eventSignatures = options.events || [];
-      if (eventSignatures.length === 0) {
-        console.error(chalk.red("Error: No event signatures provided."));
+      // Get event signature
+      const eventSignature = options.event;
+      if (!eventSignature) {
+        console.error(chalk.red("Error: No event signature provided."));
         console.log(
           chalk.yellow(
-            "Please provide event signatures using the -e or --events option."
+            "Please provide an event signature using the -e or --event option."
+          )
+        );
+        process.exit(1);
+      }
+
+      // Get event parameter index
+      const paramIndex = parseInt(options.param);
+      if (isNaN(paramIndex) || paramIndex < 0) {
+        console.error(chalk.red("Error: Invalid parameter index provided."));
+        console.log(
+          chalk.yellow(
+            "Please provide a valid parameter index (0 or greater) using the -p or --param option."
           )
         );
         process.exit(1);
       }
 
       if (options.verbose) {
-        console.log(chalk.blue("Using event signatures:"));
-        eventSignatures.forEach((sig) => console.log(`- ${sig}`));
+        console.log(chalk.blue("Using event signature:"));
+        console.log(`- ${eventSignature}`);
+        console.log(chalk.blue("Tracking parameter index:"));
+        console.log(`- ${paramIndex}`);
       }
 
       // Set the title
@@ -170,15 +185,14 @@ program
 
       if (options.verbose) {
         console.log(chalk.blue(`Starting scanner on ${network}: ${networkUrl}`));
-        console.log(
-          chalk.blue(`Monitoring ${eventSignatures.length} event types`)
-        );
+        console.log(chalk.blue("Monitoring event type"));
       }
 
       // Start the scanner
       await createScanner({
         networkUrl,
-        eventSignatures,
+        eventSignatures: [eventSignature],
+        paramIndex,
         title,
       });
     } catch (err) {

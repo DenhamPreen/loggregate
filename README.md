@@ -9,11 +9,11 @@ A terminal-based UI for monitoring blockchain events using Hypersync.
 Try it with a single command:
 
 ```bash
-# Monitor events on Ethereum (using pnpx)
-pnpx logtui -e "Transfer(address,address,uint256)" -n eth
+# Monitor transfer amounts on Ethereum (using pnpx)
+pnpx logtui -e "Transfer(address,address,uint256)" -p 2 -n eth
 
-# Monitor events on Arbitrum (using npx)
-npx logtui -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -n arbitrum
+# Monitor swap amounts on Arbitrum (using npx)
+npx logtui -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n arbitrum
 
 # See all available options
 pnpx logtui --help
@@ -24,6 +24,7 @@ pnpx logtui --help
 - Real-time monitoring of blockchain events with a beautiful terminal UI
 - Supports **all Hypersync-enabled networks** (Ethereum, Arbitrum, Optimism, etc.)
 - Custom event signature support
+- Event parameter tracking by index
 - Event distribution visualization
 - Progress tracking and statistics
 - Automatic network discovery from Hypersync API with persistent caching
@@ -45,11 +46,8 @@ pnpm add -g logtui
 ### CLI
 
 ```bash
-# Monitor custom events on Ethereum
-logtui -e "Transfer(address,address,uint256)" -n eth
-
-# Monitor multiple events
-logtui -e "Transfer(address,address,uint256)" "Approval(address,address,uint256)" -n eth
+# Monitor transfer amounts on Ethereum (third parameter)
+logtui -e "Transfer(address,address,uint256)" -p 2 -n eth
 
 # List all available networks
 logtui --list-networks
@@ -76,7 +74,8 @@ Usage: logtui [options]
 
 Options:
   -V, --version           output the version number
-  -e, --events <events>   Event signatures to monitor
+  -e, --event <event>     Event signature to monitor
+  -p, --param <index>     Index of the event parameter to track (0-based)
   -n, --network <network> Network to connect to (default: "eth")
   -t, --title <title>     Custom title for the scanner (default: "Blockchain Event Scanner")
   -N, --list-networks     List all available networks and exit
