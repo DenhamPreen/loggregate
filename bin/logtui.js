@@ -49,6 +49,7 @@ program
 program
   .option("-e, --event <event>", "Event signature to monitor")
   .option("-p, --param <index>", "Index of the event parameter to track (0-based)")
+  .option("-c, --contract <address>", "Contract address to monitor")
   .option("-n, --network <network>", "Network to connect to (default: eth)")
   .option(
     "-t, --title <title>",
@@ -129,6 +130,11 @@ program
             'logtui -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n optimism'
           )} - Monitor swap amounts on Optimism (second parameter)`
         );
+        console.log(
+          `${chalk.yellow(
+            'logtui -e "Transfer(address,address,uint256)" -c 0x1234... -n eth'
+          )} - Monitor transfers from a specific contract`
+        );
         console.log();
         process.exit(0);
       }
@@ -173,11 +179,31 @@ program
         process.exit(1);
       }
 
+      // Get contract address if provided
+      let contractAddress = null;
+      if (options.contract) {
+        // Basic validation for Ethereum address format
+        if (!/^0x[a-fA-F0-9]{40}$/.test(options.contract)) {
+          console.error(chalk.red("Error: Invalid contract address format."));
+          console.log(
+            chalk.yellow(
+              "Please provide a valid Ethereum address (0x followed by 40 hex characters)."
+            )
+          );
+          process.exit(1);
+        }
+        contractAddress = options.contract;
+      }
+
       if (options.verbose) {
         console.log(chalk.blue("Using event signature:"));
         console.log(`- ${eventSignature}`);
         console.log(chalk.blue("Tracking parameter index:"));
         console.log(`- ${paramIndex}`);
+        if (contractAddress) {
+          console.log(chalk.blue("Monitoring contract:"));
+          console.log(`- ${contractAddress}`);
+        }
       }
 
       // Set the title
@@ -193,6 +219,7 @@ program
         networkUrl,
         eventSignatures: [eventSignature],
         paramIndex,
+        contractAddress,
         title,
       });
     } catch (err) {

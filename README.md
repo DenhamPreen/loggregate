@@ -15,6 +15,9 @@ pnpx logtui -e "Transfer(address,address,uint256)" -p 2 -n eth
 # Monitor swap amounts on Arbitrum (using npx)
 npx logtui -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n arbitrum
 
+# Monitor events from a specific contract
+pnpx logtui -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
+
 # See all available options
 pnpx logtui --help
 ```
@@ -25,6 +28,7 @@ pnpx logtui --help
 - Supports **all Hypersync-enabled networks** (Ethereum, Arbitrum, Optimism, etc.)
 - Custom event signature support
 - Event parameter tracking by index
+- Contract-specific event monitoring
 - Event distribution visualization
 - Progress tracking and statistics
 - Automatic network discovery from Hypersync API with persistent caching
@@ -48,6 +52,9 @@ pnpm add -g logtui
 ```bash
 # Monitor transfer amounts on Ethereum (third parameter)
 logtui -e "Transfer(address,address,uint256)" -p 2 -n eth
+
+# Monitor events from a specific contract
+logtui -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
 
 # List all available networks
 logtui --list-networks
@@ -76,6 +83,7 @@ Options:
   -V, --version           output the version number
   -e, --event <event>     Event signature to monitor
   -p, --param <index>     Index of the event parameter to track (0-based)
+  -c, --contract <addr>   Contract address to monitor
   -n, --network <network> Network to connect to (default: "eth")
   -t, --title <title>     Custom title for the scanner (default: "Blockchain Event Scanner")
   -N, --list-networks     List all available networks and exit

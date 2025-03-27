@@ -1,3 +1,4 @@
 - [] Update readme gif
 - [] publish package
 - [] check readme generated addresses
+- [] make param index name
