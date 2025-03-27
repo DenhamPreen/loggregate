@@ -48,7 +48,7 @@ program
 // Main command
 program
   .option("-e, --event <event>", "Event signature to monitor")
-  .option("-p, --param <index>", "Index of the event parameter to track (0-based)")
+  .option("-p, --param <name>", "Name of the event parameter to track (val must be a uint)")
   .option("-c, --contract <address>", "Contract address to monitor")
   .option("-n, --network <network>", "Network to connect to (default: eth)")
   .option("-d, --decimals <number>", "Number of decimals to divide values by (e.g. 18 for wei to ETH)", "0")
@@ -169,16 +169,8 @@ program
       }
 
       // Get event parameter index
-      const paramIndex = parseInt(options.param);
-      if (isNaN(paramIndex) || paramIndex < 0) {
-        console.error(chalk.red("Error: Invalid parameter index provided."));
-        console.log(
-          chalk.yellow(
-            "Please provide a valid parameter index (0 or greater) using the -p or --param option."
-          )
-        );
-        process.exit(1);
-      }
+      const param = options.param;
+      // todo: validate it's part of the event signature
 
       // Get decimals value
       const decimals = parseInt(options.decimals);
@@ -230,8 +222,8 @@ program
       // Start the scanner
       await createScanner({
         networkUrl,
-        eventSignature,
-        paramIndex,
+        eventSignatureHuman: eventSignature,
+        param,
         contractAddress,
         title,
         decimals,

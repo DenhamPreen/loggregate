@@ -1,8 +1,6 @@
-- [] support decimal places on display
-- [] allow human readable event signatures
-- [] make param index name
 - [] update repo name
 - [] check readme generated addresses
 - [] Update readme gif
 - [] add inspired by / forked from logtui
 - [] publish package
+- [] validate param is part of the event signature

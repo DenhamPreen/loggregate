@@ -8,7 +8,7 @@ A powerful tool for aggregating and analyzing EVM blockchain events.
 
 ```bash
 # Monitor ERC20 transfers on Ethereum
-pnpx log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth
+pnpx log-aggregator -e "event Transfer(address indexed from, address indexed to, uint256 value)" -n eth -p "value" -c 0xdC035D45d973E3EC169d2276DDab16f1e407384F -d 18
 
 # Monitor Uniswap swaps on Arbitrum
 npx log-aggregator -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n arbitrum
