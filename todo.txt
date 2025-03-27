@@ -3,3 +3,4 @@
 - [] check readme generated addresses
 - [] make param index name
 - [] rename logtui to log-aggregate
+- [] allow human readable event signatures
