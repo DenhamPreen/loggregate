@@ -19,6 +19,19 @@ npx log-aggregator -e "event Swap(address indexed sender, address indexed recipi
 npx log-aggregator --help
 ```
 
+## Features
+
+- Real-time aggregation of blockchain event data with a beautiful terminal UI
+- Supports **all Hypersync-enabled networks** (Ethereum, Arbitrum, Optimism, etc.)
+- Aggregate calculations for numeric event parameters:
+  - Count of occurrences
+  - Sum of values
+  - Average value
+  - Minimum value
+  - Maximum value
+- Progress tracking and statistics
+- Automatic network discovery from Hypersync API with persistent caching
+
 ## Installation
 
 ### Global Installation

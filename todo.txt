@@ -1,3 +1,2 @@
-- [] Show event name in tui
 - [] update repo name
 - [] publish package
