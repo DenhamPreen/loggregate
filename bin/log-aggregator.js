@@ -35,6 +35,7 @@ import {
   DEFAULT_NETWORKS,
   fetchNetworks,
 } from "../lib/config.js";
+import {toEventSignature} from "viem";
 
 // Create a new command instance
 const program = new Command();
@@ -189,7 +190,7 @@ program
       const param = options.param;
        // Validate that the parameter exists in the event signature
       if (!eventSignature.includes(param)) {
-        console.error(chalk.red(`Error: Invalid parameter index provided.`));
+        console.error(chalk.red(`Error: Invalid parameter provided.`));
         console.log(
           chalk.yellow(
             `Parameter "${param}" not found in event signature: ${eventSignature}`

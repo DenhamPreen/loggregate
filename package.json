@@ -1,6 +1,6 @@
 {
   "name": "log-aggregator",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A tool for aggregating and analyzing EVM blockchain events",
   "main": "lib/index.js",
   "bin": {
@@ -17,8 +17,7 @@
     "hypersync",
     "terminal",
     "ui",
-    "dashboard",
-    "uniswap"
+    "dashboard"
   ],
   "author": "denhampreen envio.dev",
   "license": "MIT",

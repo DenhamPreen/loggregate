@@ -1,6 +1,3 @@
+- [] Show event name in tui
 - [] update repo name
-- [] check readme generated addresses
-- [] Update readme gif
-- [] add inspired by / forked from logtui
 - [] publish package
-- [] validate param is part of the event signature

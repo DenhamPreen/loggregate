@@ -2,25 +2,21 @@
 
 A powerful tool for aggregating and analyzing EVM blockchain events.
 
-![Log Aggregator gif](./hypersync.gif)
+![Log Aggregator gif](./log-aggregator.gif)
 
 ## Quick Start
 
 ```bash
-# Monitor ERC20 transfers on Ethereum
-pnpx log-aggregator -e "event Transfer(address indexed from, address indexed to, uint256 value)" -n eth -p "value" -c 0xdC035D45d973E3EC169d2276DDab16f1e407384F -d 18
+# Monitor USDC ERC20 transfers on Base
+npx log-aggregator -e "event Transfer(address indexed from, address indexed to, uint256 value)" -n base -p "value" -c "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" -d 6
 
-# Monitor Uniswap swaps on Arbitrum
-npx log-aggregator -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n arbitrum
+# Monitor USDS ERC20 transfers on Ethereum
+npx log-aggregator -e "event Transfer(address indexed from, address indexed to, uint256 value)" -n eth -p "value" -c "0xdC035D45d973E3EC169d2276DDab16f1e407384F" -d 18
 
-# Monitor specific contract on Ethereum
-pnpx log-aggregator -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
-
-# Monitor with decimal scaling (e.g., 18 for wei to ETH)
-pnpx log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth -d 18
+npx log-aggregator -e "event Swap(address indexed sender, address indexed recipient, int256 deltaQty0, int256 deltaQty1, uint160 sqrtP, uint128 liquidity, int24 currentTick)" -p "deltaQty0" -n bsc -c "0xF987939b9ea7a43d9e6A39F6542749BB8AFb09BB" -d 18
 
 # Show help
-pnpx log-aggregator --help
+npx log-aggregator --help
 ```
 
 ## Installation
@@ -38,32 +34,12 @@ yarn global add log-aggregator
 pnpm add -g log-aggregator
 ```
 
-### Local Installation
-
-```bash
-# Using npm
-npm install log-aggregator
-
-# Using yarn
-yarn add log-aggregator
-
-# Using pnpm
-pnpm add log-aggregator
-```
-
 ## Usage
 
 After installation, you can use the following commands:
 
 ```bash
-# Monitor ERC20 transfers on Ethereum
-log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth
-
-# Monitor specific contract on Ethereum
-log-aggregator -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
-
-# Monitor with decimal scaling (e.g., 18 for wei to ETH)
-log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth -d 18
+log-aggregator -e <human-readable-abi-event-signature> -p <param-name> -n <network> -d <decimals>
 
 # List available networks
 log-aggregator --list-networks
@@ -76,62 +52,13 @@ log-aggregator --refresh-networks
 
 Log Aggregator automatically discovers and caches all networks supported by Hypersync:
 
-- Ethereum (eth)
-- Arbitrum (arbitrum)
-- Optimism (optimism)
-- Base (base)
-- Polygon (polygon)
-- BSC (bsc)
-- Avalanche (avalanche)
-- Fantom (fantom)
-- Celo (celo)
-- Gnosis Chain (gnosis)
-- Linea (linea)
-- Scroll (scroll)
-- zkSync Era (zksync)
-- Starknet (starknet)
-- Solana (solana)
-- Sui (sui)
-- Aptos (aptos)
-- NEAR (near)
-- Cosmos (cosmos)
-- Fuel (fuel)
-- Filecoin (filecoin)
-- ICP (icp)
-- Mina (mina)
-- Tezos (tezos)
-- Stacks (stacks)
-- Algorand (algorand)
-- Flow (flow)
-- Hedera (hedera)
-- Celo (celo)
-- Gnosis Chain (gnosis)
-- Linea (linea)
-- Scroll (scroll)
-- zkSync Era (zksync)
-- Starknet (starknet)
-- Solana (solana)
-- Sui (sui)
-- Aptos (aptos)
-- NEAR (near)
-- Cosmos (cosmos)
-- Fuel (fuel)
-- Filecoin (filecoin)
-- ICP (icp)
-- Mina (mina)
-- Tezos (tezos)
-- Stacks (stacks)
-- Algorand (algorand)
-- Flow (flow)
-- Hedera (hedera)
-
 Run `log-aggregator --list-networks` to see the complete, up-to-date list of all supported networks.
 
 ## Development
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/log-aggregator.git
+git clone https://github.com/denhampreen/log-aggregator.git
 cd log-aggregator
 
 # Install dependencies
@@ -143,5 +70,6 @@ node bin/log-aggregator.js
 
 ## Acknowledgements
 
+- Forked & inspired by [LogTUI](https://github.com/moose-code/logtui) by JonJon Clark
 - Built with [Hypersync](https://docs.envio.dev/docs/HyperIndex/overview) by Envio
 - Terminal UI powered by [blessed](https://github.com/chjj/blessed)
