@@ -51,6 +51,7 @@ program
   .option("-p, --param <index>", "Index of the event parameter to track (0-based)")
   .option("-c, --contract <address>", "Contract address to monitor")
   .option("-n, --network <network>", "Network to connect to (default: eth)")
+  .option("-d, --decimals <number>", "Number of decimals to divide values by (e.g. 18 for wei to ETH)", "0")
   .option(
     "-t, --title <title>",
     "Custom title for the scanner",
@@ -179,6 +180,18 @@ program
         process.exit(1);
       }
 
+      // Get decimals value
+      const decimals = parseInt(options.decimals);
+      if (isNaN(decimals) || decimals < 0) {
+        console.error(chalk.red("Error: Invalid decimals value provided."));
+        console.log(
+          chalk.yellow(
+            "Please provide a valid number of decimals (0 or greater) using the -d or --decimals option."
+          )
+        );
+        process.exit(1);
+      }
+
       // Get contract address if provided
       let contractAddress = null;
       if (options.contract) {
@@ -221,6 +234,7 @@ program
         paramIndex,
         contractAddress,
         title,
+        decimals,
       });
     } catch (err) {
       console.error(chalk.red(`Error: ${err.message}`));

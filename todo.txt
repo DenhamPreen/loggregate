@@ -1,7 +1,8 @@
-- [] Update readme gif
-- [] publish package
-- [] check readme generated addresses
-- [] make param index name
-- [] rename logtui to log-aggregate
-- [] allow human readable event signatures
 - [] support decimal places on display
+- [] allow human readable event signatures
+- [] make param index name
+- [] update repo name
+- [] check readme generated addresses
+- [] Update readme gif
+- [] add inspired by / forked from logtui
+- [] publish package

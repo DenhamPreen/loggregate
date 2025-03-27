@@ -1,130 +1,144 @@
-# LogTUI
+# Log Aggregator
 
-A terminal-based UI for monitoring blockchain events using Hypersync.
+A powerful tool for aggregating and analyzing EVM blockchain events.
 
-![LogTUI gif](./hypersync.gif)
+![Log Aggregator gif](./hypersync.gif)
 
-## Quickstart
-
-Try it with a single command:
+## Quick Start
 
 ```bash
-# Monitor transfer amounts on Ethereum (using pnpx)
-pnpx logtui -e "Transfer(address,address,uint256)" -p 2 -n eth
+# Monitor ERC20 transfers on Ethereum
+pnpx log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth
 
-# Monitor swap amounts on Arbitrum (using npx)
-npx logtui -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n arbitrum
+# Monitor Uniswap swaps on Arbitrum
+npx log-aggregator -e "Swap(address,uint256,uint256,uint256,address,bytes32)" -p 1 -n arbitrum
 
-# Monitor events from a specific contract
-pnpx logtui -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
+# Monitor specific contract on Ethereum
+pnpx log-aggregator -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
 
-# See all available options
-pnpx logtui --help
+# Monitor with decimal scaling (e.g., 18 for wei to ETH)
+pnpx log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth -d 18
+
+# Show help
+pnpx log-aggregator --help
 ```
-
-## Features
-
-- Real-time monitoring of blockchain events with a beautiful terminal UI
-- Supports **all Hypersync-enabled networks** (Ethereum, Arbitrum, Optimism, etc.)
-- Custom event signature support
-- Event parameter tracking by index
-- Contract-specific event monitoring
-- Event distribution visualization
-- Progress tracking and statistics
-- Automatic network discovery from Hypersync API with persistent caching
 
 ## Installation
 
 ### Global Installation
 
 ```bash
-npm install -g logtui
-# or
-yarn global add logtui
-# or
-pnpm add -g logtui
+# Using npm
+npm install -g log-aggregator
+
+# Using yarn
+yarn global add log-aggregator
+
+# Using pnpm
+pnpm add -g log-aggregator
+```
+
+### Local Installation
+
+```bash
+# Using npm
+npm install log-aggregator
+
+# Using yarn
+yarn add log-aggregator
+
+# Using pnpm
+pnpm add log-aggregator
 ```
 
 ## Usage
 
-### CLI
+After installation, you can use the following commands:
 
 ```bash
-# Monitor transfer amounts on Ethereum (third parameter)
-logtui -e "Transfer(address,address,uint256)" -p 2 -n eth
+# Monitor ERC20 transfers on Ethereum
+log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth
 
-# Monitor events from a specific contract
-logtui -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
+# Monitor specific contract on Ethereum
+log-aggregator -e "Transfer(address,address,uint256)" -c 0x1234... -n eth
 
-# List all available networks
-logtui --list-networks
+# Monitor with decimal scaling (e.g., 18 for wei to ETH)
+log-aggregator -e "Transfer(address,address,uint256)" -p 2 -n eth -d 18
 
-# Force refresh the network list from Hypersync API (updates cache)
-logtui --refresh-networks
-```
+# List available networks
+log-aggregator --list-networks
 
-### Network Discovery
-
-LogTUI automatically discovers and caches all networks supported by Hypersync:
-
-1. On first run, it loads the default networks
-2. It then attempts to fetch all available networks from the Hypersync API
-3. Networks are cached locally for future use, even when offline
-4. Use `--refresh-networks` to force update the cached network list
-
-This ensures you always have access to all supported networks, even when working offline.
-
-### CLI Options
-
-```
-Usage: logtui [options]
-
-Options:
-  -V, --version           output the version number
-  -e, --event <event>     Event signature to monitor
-  -p, --param <index>     Index of the event parameter to track (0-based)
-  -c, --contract <addr>   Contract address to monitor
-  -n, --network <network> Network to connect to (default: "eth")
-  -t, --title <title>     Custom title for the scanner (default: "Blockchain Event Scanner")
-  -N, --list-networks     List all available networks and exit
-  --refresh-networks      Force refresh network list from API
-  -v, --verbose           Show additional info in the console
-  -h, --help              display help for command
+# Refresh network list
+log-aggregator --refresh-networks
 ```
 
 ## Supported Networks
 
-LogTUI automatically discovers all networks supported by Hypersync. The following are some commonly used networks:
+Log Aggregator automatically discovers and caches all networks supported by Hypersync:
 
-### Mainnets
+- Ethereum (eth)
+- Arbitrum (arbitrum)
+- Optimism (optimism)
+- Base (base)
+- Polygon (polygon)
+- BSC (bsc)
+- Avalanche (avalanche)
+- Fantom (fantom)
+- Celo (celo)
+- Gnosis Chain (gnosis)
+- Linea (linea)
+- Scroll (scroll)
+- zkSync Era (zksync)
+- Starknet (starknet)
+- Solana (solana)
+- Sui (sui)
+- Aptos (aptos)
+- NEAR (near)
+- Cosmos (cosmos)
+- Fuel (fuel)
+- Filecoin (filecoin)
+- ICP (icp)
+- Mina (mina)
+- Tezos (tezos)
+- Stacks (stacks)
+- Algorand (algorand)
+- Flow (flow)
+- Hedera (hedera)
+- Celo (celo)
+- Gnosis Chain (gnosis)
+- Linea (linea)
+- Scroll (scroll)
+- zkSync Era (zksync)
+- Starknet (starknet)
+- Solana (solana)
+- Sui (sui)
+- Aptos (aptos)
+- NEAR (near)
+- Cosmos (cosmos)
+- Fuel (fuel)
+- Filecoin (filecoin)
+- ICP (icp)
+- Mina (mina)
+- Tezos (tezos)
+- Stacks (stacks)
+- Algorand (algorand)
+- Flow (flow)
+- Hedera (hedera)
 
-- `eth`: Ethereum Mainnet
-- `arbitrum`: Arbitrum One
-- `optimism`: Optimism
-- `base`: Base
-- `polygon`: Polygon PoS
-- And many more...
-
-### Testnets
-
-- `arbitrum-sepolia`: Arbitrum Sepolia
-- `optimism-sepolia`: Optimism Sepolia
-- And more...
-
-Run `logtui --list-networks` to see the complete, up-to-date list of all supported networks.
+Run `log-aggregator --list-networks` to see the complete, up-to-date list of all supported networks.
 
 ## Development
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/logtui.git
-cd logtui
+git clone https://github.com/yourusername/log-aggregator.git
+cd log-aggregator
 
 # Install dependencies
 npm install
 
-# Run the development version
-node bin/logtui.js
+# Run the tool
+node bin/log-aggregator.js
 ```
 
 ## Acknowledgements

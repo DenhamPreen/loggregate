@@ -1,13 +1,13 @@
 {
-  "name": "logtui",
-  "version": "0.2.3",
-  "description": "A terminal-based UI for monitoring blockchain events using Hypersync",
+  "name": "log-aggregator",
+  "version": "1.0.0",
+  "description": "A tool for aggregating and analyzing EVM blockchain events",
   "main": "lib/index.js",
   "bin": {
-    "logtui": "./bin/logtui.js"
+    "log-aggregator": "./bin/log-aggregator.js"
   },
   "scripts": {
-    "start": "node ./bin/logtui.js",
+    "start": "node ./bin/log-aggregator.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,7 +20,7 @@
     "dashboard",
     "uniswap"
   ],
-  "author": "moose-code envio.dev",
+  "author": "denhampreen envio.dev",
   "license": "MIT",
   "dependencies": {
     "@envio-dev/hypersync-client": "^0.6.3",
@@ -36,7 +36,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/moose-code/logtui"
+    "url": "https://github.com/denhampreen/log-aggregator"
   },
   "homepage": "https://envio.dev",
   "engines": {
