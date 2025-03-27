@@ -1,13 +1,13 @@
 {
-  "name": "log-aggregator",
+  "name": "loggregate",
   "version": "0.0.1",
   "description": "A tool for aggregating and analyzing EVM blockchain events",
   "main": "lib/index.js",
   "bin": {
-    "log-aggregator": "./bin/log-aggregator.js"
+    "loggregate": "./bin/loggregate.js"
   },
   "scripts": {
-    "start": "node ./bin/log-aggregator.js",
+    "start": "node ./bin/loggregate.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -35,7 +35,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/denhampreen/log-aggregator"
+    "url": "https://github.com/denhampreen/loggregate"
   },
   "homepage": "https://envio.dev",
   "engines": {
