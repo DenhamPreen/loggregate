@@ -2,3 +2,4 @@
 - [] publish package
 - [] check readme generated addresses
 - [] make param index name
+- [] rename logtui to log-aggregate
