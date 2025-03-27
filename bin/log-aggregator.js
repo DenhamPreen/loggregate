@@ -166,11 +166,37 @@ program
           )
         );
         process.exit(1);
+      } 
+
+      try {
+        toEventSignature(eventSignature);  
+      } catch (error) {
+        console.error(chalk.red(`Error: Invalid event signature provided.`));
+        console.error(
+          chalk.yellow(
+            `Event signature "${eventSignature}" is invalid human readable abi: ${error.message}`
+          )
+        );
+        console.error(
+          chalk.yellow(
+            "For info on the human readable abi format click here: https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi"
+          )
+        );
+        process.exit(1);
       }
 
       // Get event parameter index
       const param = options.param;
-      // todo: validate it's part of the event signature
+       // Validate that the parameter exists in the event signature
+      if (!eventSignature.includes(param)) {
+        console.error(chalk.red(`Error: Invalid parameter index provided.`));
+        console.log(
+          chalk.yellow(
+            `Parameter "${param}" not found in event signature: ${eventSignature}`
+          )
+        );
+        process.exit(1);
+      }
 
       // Get decimals value
       const decimals = parseInt(options.decimals);
