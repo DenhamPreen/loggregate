@@ -1,6 +1,6 @@
 {
   "name": "loggregate",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "A tool for aggregating and analyzing EVM blockchain events",
   "main": "lib/index.js",
   "bin": {
