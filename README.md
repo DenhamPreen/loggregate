@@ -2,7 +2,7 @@
 
 A powerful tool for aggregating and analyzing EVM blockchain events.
 
-![Log Aggregator gif](./loggregate.gif)
+![Log Aggregator gif](./log-aggregator.gif)
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ npx loggregate -e "event Transfer(address indexed from, address indexed to, uint
 npx loggregate -e "event Transfer(address indexed from, address indexed to, uint256 value)" -n eth -p "value" -c "0xdC035D45d973E3EC169d2276DDab16f1e407384F" -d 18
 
 # Monitor lst deposits on aPriori monad testnet
-npx loggregate -e "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)" -n monad-testnet -p "assets" -c "0xb2f82D0f38dc453D596Ad40A37799446Cc89274A" -d 18 
+npx loggregate -e "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)" -n monad-testnet -p "assets" -c "0xb2f82D0f38dc453D596Ad40A37799446Cc89274A" -d 18
 
 # A univ3 swap pool usdt on bsc
 npx loggregate -e "event Swap(address indexed sender, address indexed recipient, int256 deltaQty0, int256 deltaQty1, uint160 sqrtP, uint128 liquidity, int24 currentTick)" -p "deltaQty0" -n bsc -c "0xF987939b9ea7a43d9e6A39F6542749BB8AFb09BB" -d 18
