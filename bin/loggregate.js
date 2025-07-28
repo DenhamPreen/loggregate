@@ -35,7 +35,7 @@ import {
   DEFAULT_NETWORKS,
   fetchNetworks,
 } from "../lib/config.js";
-import {toEventSignature} from "viem";
+import { toEventSignature } from "viem";
 
 // Create a new command instance
 const program = new Command();
@@ -49,10 +49,18 @@ program
 // Main command
 program
   .option("-e, --event <event>", "Event signature to monitor")
-  .option("-p, --param <name>", "Name of the event parameter to track (val must be a uint)")
+  .option(
+    "-p, --param <name>",
+    "Name of the event parameter to track (val must be a uint)"
+  )
   .option("-c, --contract <address>", "Contract address to monitor")
   .option("-n, --network <network>", "Network to connect to (default: eth)")
-  .option("-d, --decimals <number>", "Number of decimals to divide values by (e.g. 18 for wei to ETH)", "0")
+  .option(
+    "-d, --decimals <number>",
+    "Number of decimals to divide values by (e.g. 18 for wei to ETH)",
+    "0"
+  )
+  .option("-b, --from-block <number>", "Starting block number (default: 0)")
   .option(
     "-t, --title <title>",
     "Custom title for the scanner",
@@ -137,6 +145,11 @@ program
             'logtui -e "Transfer(address,address,uint256)" -c 0x1234... -n eth'
           )} - Monitor transfers from a specific contract`
         );
+        console.log(
+          `${chalk.yellow(
+            'logtui -e "Transfer(address,address,uint256)" -p 2 -b 1000000 -n eth'
+          )} - Start scanning from block 1,000,000`
+        );
         console.log();
         process.exit(0);
       }
@@ -167,10 +180,10 @@ program
           )
         );
         process.exit(1);
-      } 
+      }
 
       try {
-        toEventSignature(eventSignature);  
+        toEventSignature(eventSignature);
       } catch (error) {
         console.error(chalk.red(`Error: Invalid event signature provided.`));
         console.error(
@@ -188,7 +201,7 @@ program
 
       // Get event parameter index
       const param = options.param;
-       // Validate that the parameter exists in the event signature
+      // Validate that the parameter exists in the event signature
       if (!eventSignature.includes(param)) {
         console.error(chalk.red(`Error: Invalid parameter provided.`));
         console.log(
@@ -211,6 +224,21 @@ program
         process.exit(1);
       }
 
+      // Get from-block value
+      let fromBlock = 0;
+      if (options.fromBlock) {
+        fromBlock = parseInt(options.fromBlock);
+        if (isNaN(fromBlock) || fromBlock < 0) {
+          console.error(chalk.red("Error: Invalid from-block value provided."));
+          console.log(
+            chalk.yellow(
+              "Please provide a valid block number (0 or greater) using the -b or --from-block option."
+            )
+          );
+          process.exit(1);
+        }
+      }
+
       // Get contract address if provided
       let contractAddress = null;
       if (options.contract) {
@@ -230,11 +258,15 @@ program
       if (options.verbose) {
         console.log(chalk.blue("Using event signature:"));
         console.log(`- ${eventSignature}`);
-        console.log(chalk.blue("Tracking parameter index:"));
-        console.log(`- ${paramIndex}`);
+        console.log(chalk.blue("Tracking parameter:"));
+        console.log(`- ${param}`);
         if (contractAddress) {
           console.log(chalk.blue("Monitoring contract:"));
           console.log(`- ${contractAddress}`);
+        }
+        if (fromBlock > 0) {
+          console.log(chalk.blue("Starting from block:"));
+          console.log(`- ${fromBlock}`);
         }
       }
 
@@ -242,7 +274,9 @@ program
       const title = `${options.title} (${network})`;
 
       if (options.verbose) {
-        console.log(chalk.blue(`Starting scanner on ${network}: ${networkUrl}`));
+        console.log(
+          chalk.blue(`Starting scanner on ${network}: ${networkUrl}`)
+        );
         console.log(chalk.blue("Monitoring event type"));
       }
 
@@ -254,6 +288,7 @@ program
         contractAddress,
         title,
         decimals,
+        fromBlock,
       });
     } catch (err) {
       console.error(chalk.red(`Error: ${err.message}`));
